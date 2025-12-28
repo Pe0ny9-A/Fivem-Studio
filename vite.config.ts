@@ -13,5 +13,10 @@ export default defineConfig({
   optimizeDeps: {
     include: ['monaco-editor'],
   },
+  base: process.env.NODE_ENV === 'production' ? '/Fivem-Studio/' : '/',
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+  },
 })
 

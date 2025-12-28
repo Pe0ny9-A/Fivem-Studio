@@ -1,19 +1,27 @@
 import { useState, useEffect } from 'react'
 import { History, RotateCcw, Trash2, Calendar } from 'lucide-react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { fileHistoryService } from '@/services/fileHistoryService'
 import { useEditorStore } from '@/stores/editorStore'
 import { DiffMatchPatch } from 'diff-match-patch'
-import { cn } from '@/utils/cn'
+import type { Diff } from 'diff-match-patch'
 
 interface FileHistoryProps {
   fileId: string | null
 }
 
+interface FileVersion {
+  fileId: string
+  version: number
+  content: string
+  timestamp: number
+  description?: string
+}
+
 export default function FileHistory({ fileId }: FileHistoryProps) {
-  const [versions, setVersions] = useState<any[]>([])
+  const [versions, setVersions] = useState<FileVersion[]>([])
   const [selectedVersion, setSelectedVersion] = useState<number | null>(null)
   const [diff, setDiff] = useState<string>('')
   const [isDiffOpen, setIsDiffOpen] = useState(false)
@@ -43,7 +51,7 @@ export default function FileHistory({ fileId }: FileHistoryProps) {
       dmp.diff_cleanupSemantic(diffs)
 
       const diffHtml = diffs
-        .map(([op, text]) => {
+        .map(([op, text]: Diff) => {
           if (op === 1) {
             return `<span class="bg-green-500/20 text-green-600">${escapeHtml(text)}</span>`
           } else if (op === -1) {

@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input'
 import { useNavigate } from 'react-router-dom'
 import { cn } from '@/utils/cn'
 import Fuse from 'fuse.js'
+import type { FuseResult } from 'fuse.js'
 
 interface Command {
   id: string
@@ -100,7 +101,7 @@ export default function CommandPalette({ open, onOpenChange }: CommandPalettePro
   })
 
   const results = query
-    ? fuse.search(query).map((result: Fuse.FuseResult<Command>) => result.item)
+    ? fuse.search(query).map((result: FuseResult<Command>) => result.item)
     : commands
 
   useEffect(() => {
@@ -164,7 +165,9 @@ export default function CommandPalette({ open, onOpenChange }: CommandPalettePro
                   acc[cmd.category].push(cmd)
                   return acc
                 }, {} as Record<string, Command[]>)
-              ).map(([category, cmds]: [string, Command[]]) => (
+              ).map((entry: [string, Command[]]) => {
+                const [category, cmds] = entry
+                return (
                 <div key={category} className="mb-4">
                   <div className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase">
                     {category}
@@ -193,7 +196,8 @@ export default function CommandPalette({ open, onOpenChange }: CommandPalettePro
                     )
                   })}
                 </div>
-              ))}
+                )
+              })}
             </div>
           )}
         </div>

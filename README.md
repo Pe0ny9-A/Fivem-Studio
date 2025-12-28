@@ -144,6 +144,26 @@ yarn build
 
 构建产物将输出到 `dist` 目录。
 
+### 部署到 GitHub Pages
+
+项目已配置 GitHub Actions 自动部署：
+
+1. **启用 GitHub Pages**
+   - 进入仓库 Settings → Pages
+   - Source 选择 "GitHub Actions"
+   - 保存设置
+
+2. **自动部署**
+   - 推送到 `main` 或 `master` 分支会自动触发部署
+   - 部署完成后访问：`https://pe0ny9-a.github.io/Fivem-Studio/`
+
+3. **手动部署**
+   - 进入 Actions 标签页
+   - 选择 "Build and Deploy" 工作流
+   - 点击 "Run workflow"
+
+详细部署说明请查看 [DEPLOYMENT.md](DEPLOYMENT.md)
+
 ## 📖 使用指南
 
 ### 创建第一个资源

@@ -13,7 +13,7 @@ interface MonacoEditorProps {
 
 export default function MonacoEditor({ fileId }: MonacoEditorProps) {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null)
-  const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const { editorContent, updateFileContent, markAsDirty, openFiles } = useEditorStore()
   const { editorSettings } = useSettingsStore()
   const { customSnippets } = useSnippetStore()
