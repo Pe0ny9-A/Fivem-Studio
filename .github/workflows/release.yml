@@ -24,6 +24,8 @@ jobs:
 
     - name: Build project
       run: npm run build
+      env:
+        NODE_ENV: production
 
     - name: Create release archive
       run: |
