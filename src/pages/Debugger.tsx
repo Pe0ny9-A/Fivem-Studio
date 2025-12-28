@@ -1,6 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import ConsoleViewer from '@/features/debugger/ConsoleViewer'
 import PerformanceMonitor from '@/features/debugger/PerformanceMonitor'
+import CodeLinter from '@/features/debugger/CodeLinter'
 
 export default function Debugger() {
   return (
@@ -9,6 +10,7 @@ export default function Debugger() {
         <TabsList>
           <TabsTrigger value="console">控制台</TabsTrigger>
           <TabsTrigger value="performance">性能监控</TabsTrigger>
+          <TabsTrigger value="linter">代码检查</TabsTrigger>
         </TabsList>
       </div>
       <TabsContent value="console" className="flex-1 overflow-hidden">
@@ -16,6 +18,9 @@ export default function Debugger() {
       </TabsContent>
       <TabsContent value="performance" className="flex-1 overflow-hidden">
         <PerformanceMonitor />
+      </TabsContent>
+      <TabsContent value="linter" className="flex-1 overflow-hidden">
+        <CodeLinter />
       </TabsContent>
     </Tabs>
   )

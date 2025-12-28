@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { FileCode, Settings, Network, Bug, Home, FolderOpen, BookOpen } from 'lucide-react'
+import { FileCode, Settings, Network, Bug, Home, FolderOpen, BookOpen, Github, Wrench } from 'lucide-react'
 import { cn } from '@/utils/cn'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import ResourceExplorer from '@/features/explorer/ResourceExplorer'
@@ -10,6 +10,7 @@ const navigation = [
   { name: '配置生成器', href: '/generator', icon: Settings },
   { name: '依赖分析器', href: '/analyzer', icon: Network },
   { name: '调试工具', href: '/debugger', icon: Bug },
+  { name: '工具集', href: '/tools', icon: Wrench },
   { name: '文档', href: '/docs', icon: BookOpen },
 ]
 
@@ -43,6 +44,20 @@ export default function Sidebar() {
             )
           })}
         </nav>
+        <div className="mt-4 pt-4 border-t border-border">
+          <a
+            href="https://github.com/Pe0ny9-A/Fivem-Studio"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
+              "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+            )}
+          >
+            <Github className="h-4 w-4" />
+            GitHub
+          </a>
+        </div>
       </div>
       <div className="flex-1 overflow-hidden">
         <Tabs defaultValue="explorer" className="h-full flex flex-col">

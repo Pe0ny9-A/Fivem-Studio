@@ -1,6 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import ManifestGenerator from '@/features/generator/ManifestGenerator'
 import ResourceTemplate from '@/features/generator/ResourceTemplate'
+import ManifestValidator from '@/features/generator/ManifestValidator'
 
 export default function Generator() {
   return (
@@ -8,11 +9,15 @@ export default function Generator() {
       <div className="border-b border-border px-6 pt-4">
         <TabsList>
           <TabsTrigger value="generator">配置生成器</TabsTrigger>
+          <TabsTrigger value="validator">配置验证器</TabsTrigger>
           <TabsTrigger value="templates">资源模板</TabsTrigger>
         </TabsList>
       </div>
       <TabsContent value="generator" className="flex-1 overflow-hidden">
         <ManifestGenerator />
+      </TabsContent>
+      <TabsContent value="validator" className="flex-1 overflow-hidden">
+        <ManifestValidator />
       </TabsContent>
       <TabsContent value="templates" className="flex-1 overflow-hidden">
         <ResourceTemplate />

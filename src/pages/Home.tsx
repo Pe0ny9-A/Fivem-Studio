@@ -1,7 +1,11 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { FileCode, Settings, Network, Bug, BookOpen } from 'lucide-react'
+import { FileCode, Settings, Network, Bug, BookOpen, Github, FileArchive, BarChart3 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import ProjectExport from '@/features/project/ProjectExport'
+import ProjectStats from '@/features/stats/ProjectStats'
+import GitHubImporter from '@/features/github/GitHubImporter'
 
 export default function Home() {
   const features = [
@@ -38,13 +42,32 @@ export default function Home() {
   ]
 
   return (
+    <Tabs defaultValue="home" className="h-full flex flex-col">
+      <div className="border-b border-border px-6 pt-4">
+        <TabsList>
+          <TabsTrigger value="home">首页</TabsTrigger>
+          <TabsTrigger value="stats">项目统计</TabsTrigger>
+          <TabsTrigger value="export">项目导出/导入</TabsTrigger>
+          <TabsTrigger value="github">GitHub 导入</TabsTrigger>
+        </TabsList>
+      </div>
+      <TabsContent value="home" className="flex-1 overflow-auto">
     <div className="h-full overflow-auto p-6">
       <div className="max-w-6xl mx-auto space-y-8">
-        <div className="text-center space-y-2">
+        <div className="text-center space-y-4">
           <h1 className="text-4xl font-bold">FiveM Studio</h1>
           <p className="text-muted-foreground text-lg">
             专业的FiveM资源开发工具集 - 让开发更简单
           </p>
+          <a
+            href="https://github.com/Pe0ny9-A/Fivem-Studio"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <Github className="h-5 w-5" />
+            <span>在 GitHub 上查看</span>
+          </a>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -126,15 +149,33 @@ export default function Home() {
             <p className="text-sm">
               我们的文档系统包含了完整的FiveM开发指南，从基础概念到高级技巧，帮助你快速上手。
             </p>
-            <Link to="/docs">
-              <Button className="w-full">
-                查看文档
-              </Button>
-            </Link>
+            <div className="flex gap-2">
+              <Link to="/docs" className="flex-1">
+                <Button className="w-full">
+                  查看文档
+                </Button>
+              </Link>
+              <Link to="/tutorial" className="flex-1">
+                <Button variant="outline" className="w-full">
+                  新手教程
+                </Button>
+              </Link>
+            </div>
           </CardContent>
         </Card>
       </div>
     </div>
+      </TabsContent>
+      <TabsContent value="stats" className="flex-1 overflow-hidden">
+        <ProjectStats />
+      </TabsContent>
+      <TabsContent value="export" className="flex-1 overflow-hidden">
+        <ProjectExport />
+      </TabsContent>
+      <TabsContent value="github" className="flex-1 overflow-hidden">
+        <GitHubImporter />
+      </TabsContent>
+    </Tabs>
   )
 }
 

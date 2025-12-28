@@ -16,7 +16,7 @@
     "url": "https://github.com/Pe0ny9-A/Fivem-Studio/issues"
   },
   "private": true,
-  "version": "0.1.0",
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -44,7 +44,13 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "tailwind-merge": "^2.1.0",
-    "react-markdown": "^9.0.1"
+    "react-markdown": "^9.0.1",
+    "fuse.js": "^7.0.0",
+    "diff-match-patch": "^1.0.5",
+    "jszip": "^3.10.1",
+    "cmdk": "^1.0.0",
+    "react-joyride": "^2.5.2",
+    "file-saver": "^2.0.5"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",

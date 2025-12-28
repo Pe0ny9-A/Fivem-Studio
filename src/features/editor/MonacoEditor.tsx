@@ -2,6 +2,9 @@ import { useEffect, useRef } from 'react'
 import Editor from '@monaco-editor/react'
 import { useEditorStore } from '@/stores/editorStore'
 import { useSettingsStore } from '@/stores/settingsStore'
+import { useSnippetStore } from '@/stores/snippetStore'
+import { registerSnippets } from '@/utils/snippetUtils'
+import { fileHistoryService } from '@/services/fileHistoryService'
 import type { editor } from 'monaco-editor'
 
 interface MonacoEditorProps {
@@ -10,8 +13,10 @@ interface MonacoEditorProps {
 
 export default function MonacoEditor({ fileId }: MonacoEditorProps) {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null)
+  const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const { editorContent, updateFileContent, markAsDirty, openFiles } = useEditorStore()
   const { editorSettings } = useSettingsStore()
+  const { customSnippets } = useSnippetStore()
 
   const file = openFiles.find(f => f.id === fileId)
   const content = fileId ? editorContent[fileId] || '' : ''
@@ -19,6 +24,8 @@ export default function MonacoEditor({ fileId }: MonacoEditorProps) {
   useEffect(() => {
     // 配置Monaco Editor的语言支持
     if (window.monaco) {
+      // 注册代码片段
+      registerSnippets(window.monaco, customSnippets)
       // 注册Lua语言（基础配置）
       window.monaco.languages.register({ id: 'lua' })
       window.monaco.languages.setMonarchTokensProvider('lua', {
@@ -63,7 +70,7 @@ export default function MonacoEditor({ fileId }: MonacoEditorProps) {
         ],
       })
     }
-  }, [])
+  }, [customSnippets])
 
   const handleEditorDidMount = (editor: editor.IStandaloneCodeEditor) => {
     editorRef.current = editor
@@ -73,8 +80,24 @@ export default function MonacoEditor({ fileId }: MonacoEditorProps) {
     if (fileId && value !== undefined) {
       updateFileContent(fileId, value)
       markAsDirty(fileId)
+      
+      // 自动保存历史版本（防抖）
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current)
+      }
+      saveTimeoutRef.current = setTimeout(async () => {
+        await fileHistoryService.saveVersion(fileId, value)
+      }, 10000) // 10秒后保存
     }
   }
+
+  useEffect(() => {
+    return () => {
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current)
+      }
+    }
+  }, [])
 
   const getLanguage = () => {
     if (!file) return 'plaintext'
