@@ -6,6 +6,7 @@ import { useProjectStore } from '@/stores/projectStore'
 import { useEditorStore } from '@/stores/editorStore'
 import { FileNode } from '@/types/resource'
 import Fuse from 'fuse.js'
+import type { FuseResult } from 'fuse.js'
 import { cn } from '@/utils/cn'
 
 interface FileSearchProps {
@@ -45,7 +46,7 @@ export default function FileSearch({ open, onOpenChange }: FileSearchProps) {
   })
 
   const results = query
-    ? fuse.search(query).map((result: Fuse.FuseResult<FileNode & { fullPath: string }>) => result.item)
+    ? fuse.search(query).map((result: FuseResult<FileNode & { fullPath: string }>) => result.item)
     : allFiles.slice(0, 20)
 
   useEffect(() => {

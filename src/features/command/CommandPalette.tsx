@@ -165,8 +165,8 @@ export default function CommandPalette({ open, onOpenChange }: CommandPalettePro
                   acc[cmd.category].push(cmd)
                   return acc
                 }, {} as Record<string, Command[]>)
-              ).map((entry: [string, Command[]]) => {
-                const [category, cmds] = entry
+              ).map((entry) => {
+                const [category, cmds] = entry as [string, Command[]]
                 return (
                 <div key={category} className="mb-4">
                   <div className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase">
@@ -196,7 +196,7 @@ export default function CommandPalette({ open, onOpenChange }: CommandPalettePro
                     )
                   })}
                 </div>
-                )
+              )
               })}
             </div>
           )}

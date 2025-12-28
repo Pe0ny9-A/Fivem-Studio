@@ -10,6 +10,7 @@ import { useSnippetStore } from '@/stores/snippetStore'
 import { fivemSnippets, snippetCategories } from '@/data/snippets'
 import { CodeSnippet } from '@/types/snippet'
 import Fuse from 'fuse.js'
+import type { FuseResult } from 'fuse.js'
 
 export default function SnippetManager() {
   const { customSnippets, loadCustomSnippets, addCustomSnippet, deleteCustomSnippet, exportSnippets, importSnippets } = useSnippetStore()
@@ -30,7 +31,7 @@ export default function SnippetManager() {
   })
 
   const filteredSnippets = searchQuery
-    ? fuse.search(searchQuery).map((result: Fuse.FuseResult<CodeSnippet>) => result.item)
+    ? fuse.search(searchQuery).map((result: FuseResult<CodeSnippet>) => result.item)
     : selectedCategory === 'all'
     ? allSnippets
     : allSnippets.filter((s: CodeSnippet) => s.category === selectedCategory)
